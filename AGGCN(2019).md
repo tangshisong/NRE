@@ -23,4 +23,11 @@
 Q和K代表AGGCN的第l-1层的word representation, W是一个d\*d维矩阵超参数,输出的矩阵A代表第t(t<=N)次head<br>
 
 ### Densely Connected Layer
-Attention Guided Layer输出的是一个n\*n的权值矩阵,在这里使用密集连接以获取更多结构化的信息
+Attention Guided Layer输出的是一个n\*n的权值矩阵,在这里使用密集连接以获取更多结构化的信息<br>
+因为Attention层产生了N个不同的权值矩阵,所以在密集连接层也需要N个Densely Connected Layer.<br>
+为了提高参数的利用效率,对于每一个密集连接层,它有L个sub-layers,每个子层的输入维度为d/L,最后再将子层输入连接起来即可.<br>
+
+将GCN中每个词在不同层的表示向量连接,定义![](https://latex.codecogs.com/gif.latex?g_%7Bj%7D%5E%7B%28l%29%7D%3D%5Bx_%7Bj%7D%3Bh_%7Bj%7D%5E%7B%281%29%7D%3B...%3Bh_%7Bj%7D%5E%7B%28l-1%29%7D%5D)作为节点j初始值(词向量)与节点j在1到l-1层的连接向量<br>
+
+将连接后的word representation与注意力层的各个head的矩阵进行线性运算:
+![](https://latex.codecogs.com/gif.latex?h_%7Bt_%7Bi%7D%7D%5E%7B%28l%29%7D%3D%5Csigma%20%28%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%5Ctilde%7BA%7D_%7Bij%7D%5E%7B%28t%29%7D%20W_%7Bt%7D%5E%7B%28l%29%7D%20g_%7Bj%7D%5E%7B%28l%29%7D%20&amp;plus;%20b_%7Bt%7D%5E%7B%28l%29%7D%29)
