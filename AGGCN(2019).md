@@ -8,4 +8,5 @@
 
 `note：就是在GCN里面加了注意力，这个玩意是真的好用啊`
 
-![]()
+## Architecture
+![](https://github.com/tangshisong/NRE/blob/master/image/1.png)
